@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "node": "registry:env/node#6.0.0+20160902022231"
+  },
+  "dependencies": {
+    "yargs": "registry:npm/yargs#5.0.0+20160817153026"
+  }
+}

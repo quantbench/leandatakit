@@ -1,0 +1,58 @@
+{
+  "name": "eoddatatolean",
+  "version": "0.1.0",
+  "description": "Convert EODData CSV stock data to Quantconnect LEAN format",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thequantapprentice/eoddatatolean.git"
+  },
+  "author": "Eugene Duvenage",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thequantapprentice/eoddatatolean/issues"
+  },
+  "homepage": "https://github.com/thequantapprentice/eoddatatolean#readme",
+  "files": [
+    "Readme.md",
+    "LICENSE",
+    "lib/*.js",
+    "lib/*.js.map",
+    "lib/eodatatolean.d.ts"
+  ],
+  "scripts": {
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "argv": "0.0.2",
+    "fast-csv": "^2.1.0",
+    "q": "^1.4.1",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-spies": "^0.7.1",
+    "del": "2.0.2",
+    "dotbin": "^1.0",
+    "dts-generator": "^1.7",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-help": "^1.6.0",
+    "gulp-inject": "3.0.0",
+    "gulp-istanbul": "^1.1.0",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-sequence": "0.4.1",
+    "gulp-tsconfig-files": "0.0.2",
+    "gulp-tslint": "^3.1",
+    "jasmine": "^2.3.1",
+    "jasmine-console-reporter": "^1.2.7",
+    "jshint": "^2.9.3",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "tslint": "^3.5",
+    "typescript": "^1.8"
+  },
+  "typings": "lib/eoddatetolean.d.ts",
+  "bin": {
+    "eoddatetolean": "./lib/eoddatatolean.js"
+  }
+}
