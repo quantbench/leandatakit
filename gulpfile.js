@@ -18,34 +18,42 @@ var reporter = new JasmineConsoleReporter({
 
 require('dotbin');
 
-var tsFilesGlob = ['./typings/index.d.ts', './src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts'];
+var tsFilesGlob = ['./src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts'];
+var tsFilesGlob2 = ['./typings/index.d.ts', './src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts'];
 
 var appName = (function (p) {
     return p.name;
 })(require('./package.json'));
 
-gulp.task('clean', function () {
+function updatetsconfig() {
+    return gulp.src(tsFilesGlob2)
+        .pipe(tsconfig());
+}
+
+function clean() {
     return del([
         'lib/**/*'
     ]);
-});
+}
 
-gulp.task('tslint', function () {
+function runtslint() {
     return gulp.src(tsFilesGlob)
-        .pipe(tslint())
-        .pipe(tslint.report('verbose'));
-});
+        .pipe(tslint({
+            formatter: 'verbose'
+        }))
+        .pipe(tslint.report());
+}
 
-gulp.task('gen-def', function () {
+function gendef() {
     return dtsGenerator.default({
         name: appName,
         project: '.',
         out: './lib/' + appName + '.d.ts',
         exclude: ['node_modules/**/*.d.ts', 'typings/**/*.d.ts']
     });
-});
+}
 
-gulp.task('_build', function (cb) {
+function tscbuild(done) {
     exec('tsc --version', function (err, stdout, stderr) {
         console.log('TypeScript ', stdout);
         if (stderr) {
@@ -53,19 +61,21 @@ gulp.task('_build', function (cb) {
         }
     });
 
-    return exec('tsc', function (err, stdout, stderr) {
+    exec('tsc', function (err, stdout, stderr) {
         console.log(stdout);
         if (stderr) {
             console.log(stderr);
         }
-        cb(err);
+        done(err);
     });
-});
+}
 
 //run tslint task, then run update-tsconfig and gen-def in parallel, then run _build
-gulp.task('build', function (callback) {
-    gulp.series('tslint', 'gen-def', '_build')(callback);
-});
+var build = gulp.series(clean, runtslint, updatetsconfig, gendef, tscbuild);
+
+gulp.task('build', build);
+
+gulp.task('tscbuild', tscbuild);
 
 gulp.task("istanbul:pre-test", function () {
     return gulp.src(['lib/src/**/*.js', '!lib/src/**/index.js'])
