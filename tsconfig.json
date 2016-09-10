@@ -12,6 +12,7 @@
   "files": [
     "src/commandlineparser.ts",
     "src/packagedataforlean.ts",
+    "src/types.ts",
     "test/commandlineparser.spec.ts",
     "typings/index.d.ts"
   ]

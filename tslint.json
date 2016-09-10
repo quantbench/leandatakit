@@ -12,6 +12,7 @@
     "no-var-requires": false,
     "no-console": [
         false
-    ]
+    ],
+    "object-literal-key-quotes": [true, "always"]
   }
 }
