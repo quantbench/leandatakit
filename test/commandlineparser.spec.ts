@@ -19,19 +19,23 @@ describe("CommandLineParser", () => {
             });
 
             it("should parse the sourcedirectory", () => {
-                this.parseResult.sourceDirectory.should.be.equal(this.sourceDirectory);
+                this.parseResult.options.sourceDirectory.should.be.equal(this.sourceDirectory);
             });
 
             it("should parse the destinationdirectory", () => {
-                this.parseResult.destinationDirectory.should.be.equal(this.destinationDirectory);
+                this.parseResult.options.destinationDirectory.should.be.equal(this.destinationDirectory);
             });
 
             it("should use a default for instruments", () => {
-                this.parseResult.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
+                this.parseResult.options.instruments.should.equal(parser.INSTRUMENTS_DEFAULT);
             });
 
             it("should use a default for source extension", () => {
-                this.parseResult.sourceFileExtension.should.be.equal(parser.SOURCE_EXTENSION_DEFAULT);
+                this.parseResult.options.sourceFileExtension.should.be.equal(parser.SOURCE_EXTENSION_DEFAULT);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
 
@@ -44,92 +48,148 @@ describe("CommandLineParser", () => {
             });
 
             it("should parse the sourcedirectory", () => {
-                this.parseResult.sourceDirectory.should.be.equal(this.sourceDirectory);
+                this.parseResult.options.sourceDirectory.should.be.equal(this.sourceDirectory);
             });
 
             it("should parse the destinationdirectory", () => {
-                this.parseResult.destinationDirectory.should.be.equal(this.destinationDirectory);
+                this.parseResult.options.destinationDirectory.should.be.equal(this.destinationDirectory);
             });
 
             it("should use a default for instruments", () => {
-                this.parseResult.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
+                this.parseResult.options.instruments.should.equal(parser.INSTRUMENTS_DEFAULT);
             });
 
             it("should use a default for source extension", () => {
-                this.parseResult.sourceFileExtension.should.be.equal(parser.SOURCE_EXTENSION_DEFAULT);
+                this.parseResult.options.sourceFileExtension.should.be.equal(parser.SOURCE_EXTENSION_DEFAULT);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
     });
 
-    describe("when instruments are specified with no other flags", () => {
+    describe("when instruments are specified along with the default flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
-                this.instruments = ["abc", "edf"];
-                this.parseResult = this.parser.parse(["--instruments", this.instruments]);
+                this.instruments = "abc, edf";
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "--instruments", this.instruments]);
             });
 
             it("should parse the instruments", () => {
-                this.parseResult.instruments.should.deep.equal(this.instruments);
+                this.parseResult.options.instruments.should.equal(this.instruments);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
 
-        describe("given that the long form is used", () => {
+        describe("given that the short form is used", () => {
             beforeEach(() => {
-                this.instruments = ["abc", "edf"];
-                this.parseResult = this.parser.parse(["-i", this.instruments]);
+                this.instruments = "abc, edf";
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "-i", this.instruments]);
             });
 
             it("should parse the instruments", () => {
-                this.parseResult.instruments.should.deep.equal(this.instruments);
+                this.parseResult.options.instruments.should.equal(this.instruments);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
     });
 
-    describe("when instruments are specified from a file with no other flags", () => {
+    describe("when instruments are specified from a file along with the default flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.instrumentsFile = "someinstrumentsfile";
-                this.parseResult = this.parser.parse(["--instruments-file", this.instrumentsFile]);
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "--instruments-file", this.instrumentsFile]);
             });
 
             it("should parse the instruments file", () => {
-                this.parseResult.instrumentsFile.should.deep.equal(this.instrumentsFile);
+                this.parseResult.options.instrumentsFile.should.deep.equal(this.instrumentsFile);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
 
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.instrumentsFile = "someinstrumentsfile";
-                this.parseResult = this.parser.parse(["-f", this.instrumentsFile]);
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "-f", this.instrumentsFile]);
             });
 
             it("should parse the instruments file", () => {
-                this.parseResult.instrumentsFile.should.deep.equal(this.instrumentsFile);
+                this.parseResult.options.instrumentsFile.should.deep.equal(this.instrumentsFile);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
     });
 
-    describe("when source file extensions are specified with no other flags", () => {
+    describe("when source file extensions are specified along with the default flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.sourceFileExtension = "txt";
-                this.parseResult = this.parser.parse(["--source-extension", this.sourceFileExtension]);
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "--source-extension", this.sourceFileExtension]);
             });
 
             it("should parse the source extension", () => {
-                this.parseResult.sourceFileExtension.should.equal(this.sourceFileExtension);
+                this.parseResult.options.sourceFileExtension.should.equal(this.sourceFileExtension);
+            });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
             });
         });
 
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.sourceFileExtension = "txt";
-                this.parseResult = this.parser.parse(["-e", this.sourceFileExtension]);
+                this.sourceDirectory = "somesourcedirectory";
+                this.destinationDirectory = "somedestinationdirectory";
+                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
+                    "--destination-directory", this.destinationDirectory, "-e", this.sourceFileExtension]);
             });
 
             it("should parse the source extension", () => {
-                this.parseResult.sourceFileExtension.should.equal(this.sourceFileExtension);
+                this.parseResult.options.sourceFileExtension.should.equal(this.sourceFileExtension);
             });
+
+            it("should result in no errors", () => {
+                this.parseResult.error.should.have.lengthOf(0);
+            });
+        });
+    });
+
+    describe("when no arguments are supplied", () => {
+        beforeEach(() => {
+            this.parseResult = this.parser.parse([]);
+        });
+
+        it("should result in errors", () => {
+            this.parseResult.error.length.should.be.above(0);
         });
     });
 });

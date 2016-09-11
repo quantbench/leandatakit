@@ -26,8 +26,7 @@
   "dependencies": {
     "fast-csv": "^2.1.0",
     "q": "^1.4.1",
-    "yargs": "^5.0.0",
-    "yargs-parser": "^3.2.0"
+    "yargs": "^5.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -19,7 +19,7 @@ var reporter = new JasmineConsoleReporter({
 require('dotbin');
 
 var tsFilesGlob = ['./src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts'];
-var tsFilesGlob2 = ['./typings/index.d.ts', './src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts'];
+var tsFilesGlob2 = ['./src/**/*.ts', './test/**/*.ts', '!./src/**/index.ts', './typings/index.d.ts'];
 
 var appName = (function (p) {
     return p.name;

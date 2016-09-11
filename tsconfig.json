@@ -14,6 +14,7 @@
     "src/packagedataforlean.ts",
     "src/types.ts",
     "test/commandlineparser.spec.ts",
+    "test/go.ts",
     "typings/index.d.ts"
   ]
 }
