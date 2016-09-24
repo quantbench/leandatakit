@@ -1,14 +1,15 @@
 {
   "globalDependencies": {
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "node": "registry:env/node#6.0.0+20160902022231"
+    "node": "registry:env/node#6.0.0+20160918225031"
   },
   "dependencies": {
     "bluebird": "registry:npm/bluebird#3.4.1+20160909132857",
     "chai": "registry:npm/chai#3.5.0+20160723033700",
+    "glob": "registry:npm/glob#6.0.0+20160723033700",
     "graceful-fs": "registry:npm/graceful-fs#4.0.0+20160723033700",
     "sinon": "registry:npm/sinon#1.16.0+20160723033700",
     "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142",
-    "yargs": "registry:npm/yargs#5.0.0+20160817153026"
+    "yargs": "registry:npm/yargs#5.0.0+20160907000723"
   }
 }

@@ -11,6 +11,7 @@
   },
   "files": [
     "src/commandlineparser.ts",
+    "src/instrumentDiscoverer.ts",
     "src/packagedataforlean.ts",
     "src/types.ts",
     "test/commandlineparser.spec.ts",

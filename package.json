@@ -25,9 +25,9 @@
   },
   "dependencies": {
     "bluebird": "^3.4.6",
-    "fast-csv": "^2.1.0",
+    "fast-csv": "^2.2.0",
+    "glob": "^7.1.0",
     "graceful-fs": "^4.1.6",
-    "q": "^1.4.1",
     "yargs": "^5.0.0"
   },
   "devDependencies": {
@@ -37,20 +37,20 @@
     "dotbin": "^1.0",
     "dts-generator": "^1.7",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-help": "^1.6.0",
+    "gulp-help": "^1.6.1",
     "gulp-inject": "4.1.0",
-    "gulp-istanbul": "^1.1.0",
-    "gulp-jasmine": "^2.0.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-jasmine": "^2.4.1",
     "gulp-sequence": "0.4.6",
     "gulp-tsconfig-files": "0.4.0",
     "gulp-tslint": "^6.1.1",
-    "jasmine": "^2.3.1",
+    "jasmine": "^2.5.2",
     "jasmine-console-reporter": "^1.2.7",
     "jshint": "^2.9.3",
-    "sinon": "^1.17.5",
+    "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
-    "tslint": "^3.5",
-    "typescript": "^1.8"
+    "tslint": "^3.15",
+    "typescript": "^2.0"
   },
   "typings": "lib/packagedataforlean.d.ts",
   "bin": {
