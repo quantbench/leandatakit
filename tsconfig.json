@@ -12,6 +12,7 @@
   "files": [
     "src/commandlineparser.ts",
     "src/convertdatatoleanfmt.ts",
+    "src/convertor.ts",
     "src/instrumentDiscoverer.ts",
     "src/instrumentFileProcessor.ts",
     "src/instrumentFileWriter.ts",

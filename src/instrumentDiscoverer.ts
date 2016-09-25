@@ -6,7 +6,10 @@ export class InstrumentDiscoverer {
     public discover(sourceDirectory: string, sourceFileExtension: string): Promise<string[]> {
 
         return new Promise<string[]>((resolve, reject) => {
-            let globstring = path.join(sourceDirectory + "/**/" + sourceFileExtension);
+            let resolvedPath = path.resolve(sourceDirectory);
+            console.log("PATH " + resolvedPath);
+            let globstring = path.join(resolvedPath + "/**/*." + sourceFileExtension);
+            console.log(globstring);
             glob(globstring, (err, files) => {
                 if (err == null) {
                     resolve(files);

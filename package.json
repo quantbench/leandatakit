@@ -54,6 +54,6 @@
   },
   "typings": "lib/convertdatatoleanfmt.d.ts",
   "bin": {
-    "convertdatatoleanfmt": "./lib/index.js"
+    "convertdatatoleanfmt": "./lib/src/convertdatatoleanfmt.js"
   }
 }
