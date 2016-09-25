@@ -189,6 +189,7 @@ describe("CommandLineParser", () => {
         });
 
         it("should result in errors", () => {
+            console.log("ARG");
             this.parseResult.error.length.should.be.above(0);
         });
     });

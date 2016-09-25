@@ -25,7 +25,7 @@ export class CommandLineParser {
 
         function fail(message: string): any {
             parseErrors = message;
-            // console.error(message);
+            console.error(message);
         }
 
         let options: any = yargs.alias("destination-directory", "d")
