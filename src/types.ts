@@ -1,4 +1,4 @@
-export interface PackageDataForLeanOptions {
+export interface ConvertDataToLeanFmtOptions {
     sourceDirectory: string;
     destinationDirectory: string;
     instruments?: string[];

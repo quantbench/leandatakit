@@ -11,8 +11,10 @@
   },
   "files": [
     "src/commandlineparser.ts",
+    "src/convertdatatoleanfmt.ts",
     "src/instrumentDiscoverer.ts",
-    "src/packagedataforlean.ts",
+    "src/instrumentFileProcessor.ts",
+    "src/instrumentFileWriter.ts",
     "src/types.ts",
     "test/commandlineparser.spec.ts",
     "test/go.ts",

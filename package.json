@@ -1,24 +1,24 @@
 {
-  "name": "packagedataforlean",
+  "name": "convertdatatoleanfmt",
   "version": "0.1.0",
   "description": "Convert EODData CSV stock data to Quantconnect LEAN format",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thequantapprentice/packagedataforlean.git"
+    "url": "git+https://github.com/thequantapprentice/convertdatatoleanfmt.git"
   },
   "author": "Eugene Duvenage",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thequantapprentice/packagedataforlean/issues"
+    "url": "https://github.com/thequantapprentice/convertdatatoleanfmt/issues"
   },
-  "homepage": "https://github.com/thequantapprentice/packagedataforlean#readme",
+  "homepage": "https://github.com/thequantapprentice/convertdatatoleanfmt#readme",
   "files": [
     "Readme.md",
     "LICENSE",
     "lib/*.js",
     "lib/*.js.map",
-    "lib/packagedataforlean.d.ts"
+    "lib/convertdatatoleanfmt.d.ts"
   ],
   "scripts": {
     "test": "gulp test"
@@ -52,8 +52,8 @@
     "tslint": "^3.15",
     "typescript": "^2.0"
   },
-  "typings": "lib/packagedataforlean.d.ts",
+  "typings": "lib/convertdatatoleanfmt.d.ts",
   "bin": {
-    "packagedataforlean": "./lib/packagedataforlean.js"
+    "convertdatatoleanfmt": "./lib/convertdatatoleanfmt.js"
   }
 }
