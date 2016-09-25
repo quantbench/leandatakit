@@ -27,7 +27,7 @@ describe("CommandLineParser", () => {
             });
 
             it("should use a default for instruments", () => {
-                this.parseResult.options.instruments.should.equal(parser.INSTRUMENTS_DEFAULT);
+                this.parseResult.options.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
             });
 
             it("should use a default for source extension", () => {
@@ -56,7 +56,7 @@ describe("CommandLineParser", () => {
             });
 
             it("should use a default for instruments", () => {
-                this.parseResult.options.instruments.should.equal(parser.INSTRUMENTS_DEFAULT);
+                this.parseResult.options.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
             });
 
             it("should use a default for source extension", () => {
@@ -80,7 +80,7 @@ describe("CommandLineParser", () => {
             });
 
             it("should parse the instruments", () => {
-                this.parseResult.options.instruments.should.equal(this.instruments);
+                this.parseResult.options.instruments.should.deep.equal(this.instruments.split(","));
             });
 
             it("should result in no errors", () => {
@@ -98,7 +98,7 @@ describe("CommandLineParser", () => {
             });
 
             it("should parse the instruments", () => {
-                this.parseResult.options.instruments.should.equal(this.instruments);
+                this.parseResult.options.instruments.should.deep.equal(this.instruments.split(","));
             });
 
             it("should result in no errors", () => {

@@ -5,15 +5,15 @@ export const INSTRUMENTS_DEFAULT = "*";
 export const SOURCE_EXTENSION_DEFAULT = "csv";
 
 export interface CommandLineParserResult {
-    options: types.PackageDataForLeanOptions;
+    options: types.ConvertDataToLeanFmtOptions;
     error: string;
 }
 
 class CommandLineParserResultImpl implements CommandLineParserResult {
-    public options: types.PackageDataForLeanOptions;
+    public options: types.ConvertDataToLeanFmtOptions;
     public error: string;
 
-    constructor(options: types.PackageDataForLeanOptions, error: string) {
+    constructor(options: types.ConvertDataToLeanFmtOptions, error: string) {
         this.options = options;
         this.error = error;
     }
@@ -25,7 +25,7 @@ export class CommandLineParser {
 
         function fail(message: string): any {
             parseErrors = message;
-            console.error(message);
+            // console.error(message);
         }
 
         let options: any = yargs.alias("destination-directory", "d")
@@ -44,7 +44,7 @@ export class CommandLineParser {
             "destinationDirectory": options["destination-directory"],
             "sourceDirectory": options["source-directory"],
             "sourceFileExtension": options["source-extension"],
-            "instruments": options.instruments,
+            "instruments": options.instruments.split(","),
             "instrumentsFile": options["instruments-file"],
         }, parseErrors);
     }
