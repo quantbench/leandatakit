@@ -16,6 +16,7 @@
     "src/instrumentDiscoverer.ts",
     "src/instrumentFileProcessor.ts",
     "src/instrumentFileWriter.ts",
+    "src/instrumentMatcher.ts",
     "src/types.ts",
     "test/commandlineparser.spec.ts",
     "test/go.ts",

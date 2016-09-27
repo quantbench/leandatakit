@@ -27,20 +27,13 @@ export class Convertor {
                 console.dir(files);
                 return Promise.resolve()
                     .then(() => {
-                        return this.processFiles(files, parseResult.options.instruments);
+                        return this.processor.processFiles(files, parseResult.options.destinationDirectory,
+                            parseResult.options.instruments);
                     });
             })
             .catch((error) => {
                 console.log(error);
             });
 
-    }
-
-    private processFiles(files: string[], instruments: string[]): Promise<{}> {
-        console.log("Processing Files");
-        return Promise.each(files, (file, index) => {
-            console.log("Processing " + file);
-            return this.processor.processFile(file, instruments);
-        });
     }
 }
