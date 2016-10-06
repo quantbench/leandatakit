@@ -34,8 +34,8 @@ export class Convertor {
                 console.dir(files);
                 return Promise.resolve()
                     .then(() => {
-                        return this.processor.processFiles(files, parseResult.options.outputDirectory,
-                            parseResult.options.securities);
+                        return this.processor.processFiles(provider, parseResult.options.type, parseResult.options.resolution,
+                            files, parseResult.options.outputDirectory, parseResult.options.securities);
                     });
             })
             .catch((error) => {
