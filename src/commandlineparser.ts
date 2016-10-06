@@ -1,7 +1,7 @@
 import * as types from "./types";
 import * as yargs from "yargs";
 
-export const INSTRUMENTS_DEFAULT = "*";
+export const SECURITIES_DEFAULT = "*";
 export const SOURCE_EXTENSION_DEFAULT = "csv";
 
 export interface CommandLineParserResult {
@@ -28,24 +28,35 @@ export class CommandLineParser {
             console.error(message);
         }
 
-        let options: any = yargs.alias("destination-directory", "d")
-            .alias("instruments", "i")
-            .alias("instruments-file", "f")
-            .alias("source-directory", "s")
+        let options: any = yargs.alias("output-directory", "o")
+            .alias("securities", "s")
+            .alias("securities-file", "f")
+            .alias("input-directory", "i")
             .alias("source-extension", "e")
+            .alias("data-provider", "p")
+            .demand("p", "the name of the data provider that supports the input data format.")
+            .alias("resolution", "r")
+            .choices("r", ["daily", "hourly", "minute", "second", "tick"])
+            .default("r", "daily")
+            .alias("type", "t")
+            .choices("t", ["equity", "option", "forex"])
+            .default("t", "equity")
             .default("source-extension", SOURCE_EXTENSION_DEFAULT)
-            .default("instruments", INSTRUMENTS_DEFAULT)
-            .demand("source-directory")
-            .demand("destination-directory")
+            .default("securities", SECURITIES_DEFAULT)
+            .demand("input-directory")
+            .demand("output-directory")
             .fail(fail)
             .parse(args);
 
         return new CommandLineParserResultImpl({
-            "destinationDirectory": options["destination-directory"],
-            "sourceDirectory": options["source-directory"],
+            "outputDirectory": options["output-directory"],
+            "inputDirectory": options["input-directory"],
             "sourceFileExtension": options["source-extension"],
-            "instruments": options.instruments.split(","),
-            "instrumentsFile": options["instruments-file"],
+            "securities": options.securities.split(","),
+            "securitiesFile": options["securities-file"],
+            "dataProvider": options["data-provider"],
+            "resolution": (<any> types.Resolution)[options.resolution],
+            "type": (<any> types.SecurityType)[options.type],
         }, parseErrors);
     }
 }

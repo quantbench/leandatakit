@@ -9,25 +9,25 @@ describe("CommandLineParser", () => {
 
     });
 
-    describe("when source and destination directory are specified with no other flags", () => {
+    describe("when source and output directory are specified with no other flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory]);
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory]);
             });
 
-            it("should parse the sourcedirectory", () => {
-                this.parseResult.options.sourceDirectory.should.be.equal(this.sourceDirectory);
+            it("should parse the inputDirectory", () => {
+                this.parseResult.options.inputDirectory.should.be.equal(this.inputDirectory);
             });
 
-            it("should parse the destinationdirectory", () => {
-                this.parseResult.options.destinationDirectory.should.be.equal(this.destinationDirectory);
+            it("should parse the outputdirectory", () => {
+                this.parseResult.options.outputDirectory.should.be.equal(this.outputDirectory);
             });
 
-            it("should use a default for instruments", () => {
-                this.parseResult.options.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
+            it("should use a default for securities", () => {
+                this.parseResult.options.securities.should.deep.equal([parser.SECURITIES_DEFAULT]);
             });
 
             it("should use a default for source extension", () => {
@@ -41,22 +41,22 @@ describe("CommandLineParser", () => {
 
         describe("given that the short form is used", () => {
             beforeEach(() => {
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["-s", this.sourceDirectory,
-                    "-d", this.destinationDirectory]);
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["-i", this.inputDirectory,
+                    "-d", this.outputDirectory]);
             });
 
-            it("should parse the sourcedirectory", () => {
-                this.parseResult.options.sourceDirectory.should.be.equal(this.sourceDirectory);
+            it("should parse the inputDirectory", () => {
+                this.parseResult.options.inputDirectory.should.be.equal(this.inputDirectory);
             });
 
-            it("should parse the destinationdirectory", () => {
-                this.parseResult.options.destinationDirectory.should.be.equal(this.destinationDirectory);
+            it("should parse the outputdirectory", () => {
+                this.parseResult.options.outputDirectory.should.be.equal(this.outputDirectory);
             });
 
-            it("should use a default for instruments", () => {
-                this.parseResult.options.instruments.should.deep.equal([parser.INSTRUMENTS_DEFAULT]);
+            it("should use a default for securities", () => {
+                this.parseResult.options.securities.should.deep.equal([parser.SECURITIES_DEFAULT]);
             });
 
             it("should use a default for source extension", () => {
@@ -69,18 +69,18 @@ describe("CommandLineParser", () => {
         });
     });
 
-    describe("when instruments are specified along with the default flags", () => {
+    describe("when securities are specified along with the default flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
-                this.instruments = "abc, edf";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "--instruments", this.instruments]);
+                this.securities = "abc, edf";
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "--securities", this.securities]);
             });
 
-            it("should parse the instruments", () => {
-                this.parseResult.options.instruments.should.deep.equal(this.instruments.split(","));
+            it("should parse the securities", () => {
+                this.parseResult.options.securities.should.deep.equal(this.securities.split(","));
             });
 
             it("should result in no errors", () => {
@@ -90,15 +90,15 @@ describe("CommandLineParser", () => {
 
         describe("given that the short form is used", () => {
             beforeEach(() => {
-                this.instruments = "abc, edf";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "-i", this.instruments]);
+                this.securities = "abc, edf";
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "-s", this.securities]);
             });
 
-            it("should parse the instruments", () => {
-                this.parseResult.options.instruments.should.deep.equal(this.instruments.split(","));
+            it("should parse the securities", () => {
+                this.parseResult.options.securities.should.deep.equal(this.securities.split(","));
             });
 
             it("should result in no errors", () => {
@@ -107,18 +107,18 @@ describe("CommandLineParser", () => {
         });
     });
 
-    describe("when instruments are specified from a file along with the default flags", () => {
+    describe("when securities are specified from a file along with the default flags", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
-                this.instrumentsFile = "someinstrumentsfile";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "--instruments-file", this.instrumentsFile]);
+                this.securitiesFile = "somesecuritiesfile";
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "--securities-file", this.securitiesFile]);
             });
 
-            it("should parse the instruments file", () => {
-                this.parseResult.options.instrumentsFile.should.deep.equal(this.instrumentsFile);
+            it("should parse the securities file", () => {
+                this.parseResult.options.securitiesFile.should.deep.equal(this.securitiesFile);
             });
 
             it("should result in no errors", () => {
@@ -128,15 +128,15 @@ describe("CommandLineParser", () => {
 
         describe("given that the long form is used", () => {
             beforeEach(() => {
-                this.instrumentsFile = "someinstrumentsfile";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "-f", this.instrumentsFile]);
+                this.securitiesFile = "somesecuritiesfile";
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "-f", this.securitiesFile]);
             });
 
-            it("should parse the instruments file", () => {
-                this.parseResult.options.instrumentsFile.should.deep.equal(this.instrumentsFile);
+            it("should parse the securities file", () => {
+                this.parseResult.options.securitiesFile.should.deep.equal(this.securitiesFile);
             });
 
             it("should result in no errors", () => {
@@ -149,10 +149,10 @@ describe("CommandLineParser", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.sourceFileExtension = "txt";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "--source-extension", this.sourceFileExtension]);
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "--source-extension", this.sourceFileExtension]);
             });
 
             it("should parse the source extension", () => {
@@ -167,10 +167,10 @@ describe("CommandLineParser", () => {
         describe("given that the long form is used", () => {
             beforeEach(() => {
                 this.sourceFileExtension = "txt";
-                this.sourceDirectory = "somesourcedirectory";
-                this.destinationDirectory = "somedestinationdirectory";
-                this.parseResult = this.parser.parse(["--source-directory", this.sourceDirectory,
-                    "--destination-directory", this.destinationDirectory, "-e", this.sourceFileExtension]);
+                this.inputDirectory = "someinputDirectory";
+                this.outputDirectory = "someoutputdirectory";
+                this.parseResult = this.parser.parse(["--input-directory", this.inputDirectory,
+                    "--output-directory", this.outputDirectory, "-e", this.sourceFileExtension]);
             });
 
             it("should parse the source extension", () => {

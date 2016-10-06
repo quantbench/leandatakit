@@ -2,21 +2,30 @@
 
 import * as parsing from "./commandlineparser";
 import * as conversion from "./convertor";
-import * as discovery from "./instrumentDiscoverer";
-import * as processing from "./instrumentFileProcessor";
-import * as matching from "./instrumentMatcher";
+import * as loader from "./providerLoader";
+import * as discovery from "./securityDiscoverer";
+import * as processing from "./securityFileProcessor";
+import * as matching from "./securityMatcher";
+import * as path from "path";
 
 let cli = new conversion.Convertor(
     new parsing.CommandLineParser(),
-    new discovery.InstrumentDiscoverer(),
-    new processing.InstrumentFileProcessor(new matching.InstrumentMatcher())
+    new discovery.SecurityDiscoverer(),
+    new processing.SecurityFileProcessor(new matching.SecurityMatcher())
 );
 
-cli.convert(process.argv)
-    .then(() => {
-        console.log("ALl Done");
-    })
-    .catch((error) => {
-        console.log("FAILED...");
-        console.log(error);
+let providerLoader = new loader.ProviderLoader();
+
+providerLoader.loadProviders(path.join(__dirname, "providers"))
+    .then((providers) => {
+        // got the providers
+
+        cli.convert(process.argv, providers)
+            .then(() => {
+                console.log("All Done");
+            })
+            .catch((error) => {
+                console.log("FAILED...");
+                console.log(error);
+            });
     });

@@ -2,7 +2,7 @@ import * as Promise from "bluebird";
 import * as glob from "glob";
 import * as path from "path";
 
-export class InstrumentDiscoverer {
+export class SecurityDiscoverer {
     public discover(sourceDirectory: string, sourceFileExtension: string): Promise<string[]> {
 
         return new Promise<string[]>((resolve, reject) => {

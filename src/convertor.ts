@@ -1,34 +1,41 @@
 import * as parsing from "./commandlineparser";
-import * as discovery from "./instrumentDiscoverer";
-import * as processing from "./instrumentFileProcessor";
-
+import * as discovery from "./securityDiscoverer";
+import * as processing from "./securityFileProcessor";
+import * as types from "./types";
 import * as Promise from "bluebird";
 
 export class Convertor {
     private parser: parsing.CommandLineParser;
-    private discoverer: discovery.InstrumentDiscoverer;
-    private processor: processing.InstrumentFileProcessor;
+    private discoverer: discovery.SecurityDiscoverer;
+    private processor: processing.SecurityFileProcessor;
+
     constructor(
         parser: parsing.CommandLineParser,
-        discoverer: discovery.InstrumentDiscoverer,
-        processor: processing.InstrumentFileProcessor) {
+        discoverer: discovery.SecurityDiscoverer,
+        processor: processing.SecurityFileProcessor) {
 
         this.parser = parser;
         this.discoverer = discoverer;
         this.processor = processor;
     }
 
-    public convert(conversionOptions: string[]): Promise<{}> {
+    public convert(conversionOptions: string[], providers: { [key: string]: types.IProvider }): Promise<{}> {
         let parseResult = this.parser.parse(conversionOptions);
+        // try find a provider for the one supplied
+        let provider = providers[parseResult.options.dataProvider];
+        if (provider === undefined) {
+            return Promise.reject(new Error("The provider supplied is not available."));
+        }
+
         console.log("Discovering");
-        return this.discoverer.discover(parseResult.options.sourceDirectory, parseResult.options.sourceFileExtension)
+        return this.discoverer.discover(parseResult.options.inputDirectory, parseResult.options.sourceFileExtension)
             .then((files) => {
                 console.log("Found Files ");
                 console.dir(files);
                 return Promise.resolve()
                     .then(() => {
-                        return this.processor.processFiles(files, parseResult.options.destinationDirectory,
-                            parseResult.options.instruments);
+                        return this.processor.processFiles(files, parseResult.options.outputDirectory,
+                            parseResult.options.securities);
                     });
             })
             .catch((error) => {

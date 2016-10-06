@@ -13,6 +13,7 @@
     "no-console": [
         false
     ],
-    "object-literal-key-quotes": [true, "always"]
+    "object-literal-key-quotes": [true, "always"],
+    "align": [false, "parameters"]
   }
 }
