@@ -31,6 +31,16 @@ export class TradeBar implements IBar, IBaseBar {
     public low: number;
     public close: number;
     public volume: number;
+
+    constructor(symbol: string, time: Date, open: number, high: number, low: number, close: number, volume: number) {
+        this.symbol = symbol;
+        this.time = time;
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.volume = volume;
+    }
 }
 
 export class QuoteBar implements IBar, IBaseBar {
@@ -43,17 +53,17 @@ export class QuoteBar implements IBar, IBaseBar {
 }
 
 export enum SecurityType {
-    Equity,
-    Option,
-    Forex
+    equity,
+    option,
+    forex
 }
 
 export enum Resolution {
-    Daily,
-    Hourly,
-    Minute,
-    Second,
-    Tick
+    daily,
+    hourly,
+    minute,
+    second,
+    tick
 }
 
 export enum TickType {

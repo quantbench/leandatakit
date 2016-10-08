@@ -10,7 +10,6 @@ export class ProviderLoader implements types.IProviderRegistrator {
     public loadProviders(pluginPath: string): Promise<{}> {
 
         let thisLocal = this;
-
         return Promise.resolve().then(() => {
             return fsAsync.lstatAsync(pluginPath)
                 .then((stat: fs.Stats) => {
@@ -32,8 +31,6 @@ export class ProviderLoader implements types.IProviderRegistrator {
                             });
                     } else {
                         // we have a file: load it
-                        console.log("loading plugin...");
-                        console.log(pluginPath);
                         require(pluginPath)(thisLocal);
                     }
                 });

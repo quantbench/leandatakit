@@ -27,11 +27,8 @@ export class Convertor {
             return Promise.reject(new Error("The provider supplied is not available."));
         }
 
-        console.log("Discovering");
         return this.discoverer.discover(parseResult.options.inputDirectory, parseResult.options.sourceFileExtension)
             .then((files) => {
-                console.log("Found Files ");
-                console.dir(files);
                 return Promise.resolve()
                     .then(() => {
                         return this.processor.processFiles(provider, parseResult.options.type, parseResult.options.resolution,
@@ -39,7 +36,7 @@ export class Convertor {
                     });
             })
             .catch((error) => {
-                console.log(error);
+                console.dir(error);
             });
 
     }

@@ -2,6 +2,7 @@ import * as matching from "./securityMatcher";
 import * as types from "./types";
 import * as Promise from "bluebird";
 import * as fs from "graceful-fs";
+import * as path from "path";
 import * as readline from "readline";
 
 export class SecurityFileProcessor {
@@ -12,10 +13,8 @@ export class SecurityFileProcessor {
 
     public processFiles(provider: types.IProvider, securityType: types.SecurityType, resolution: types.Resolution,
         files: string[], outputDirectory: string, securities: string[]): Promise<{}> {
-        console.log("Processing Files");
         let openStreams: { [symbol: string]: OpenStreamData } = {};
         return Promise.each(files, (file, index) => {
-            console.log("Processing " + file);
             return this.processFile(openStreams, provider, securityType, resolution, file, securities, outputDirectory);
         }).then(() => {
             // close all the open streams
@@ -23,6 +22,12 @@ export class SecurityFileProcessor {
                 openStreams[symbol].outputStream.close();
             }
             return Promise.resolve("");
+        }).catch((error) => {
+            // close all the open streams
+            for (let symbol of Object.keys(openStreams)) {
+                openStreams[symbol].outputStream.close();
+            }
+            return Promise.reject(error);
         });
     }
 
@@ -30,18 +35,24 @@ export class SecurityFileProcessor {
         resolution: types.Resolution, fileName: string, securities: string[], outputDirectory: string): Promise<{}> {
 
         return new Promise<{}>((resolve, reject) => {
-            let lineReader = readline.createInterface(fs.createReadStream(fileName));
-            let linePromises: Promise<types.TradeBar>[] = [];
-            lineReader.on("line", (line: string) => {
-                // coming soon
-                linePromises.push(provider.parseRecordFromLine(securityType, resolution, fileName, line));
-            });
-            lineReader.on("close", () => {
-                Promise.all(linePromises)
-                    .then((bars) => {
-                        return this.processTradeBars(openStreams, bars, securityType, resolution, fileName, outputDirectory);
-                    });
-            });
+            try {
+                let fileStream = fs.createReadStream(fileName);
+                let lineReader = readline.createInterface({ "input": fileStream, "terminal": false });
+                let linePromises: Promise<types.TradeBar>[] = [];
+                lineReader.on("line", (line: string) => {
+                    linePromises.push(provider.parseRecordFromLine(securityType, resolution, fileName, line));
+                });
+                lineReader.on("close", () => {
+                    Promise.all(linePromises)
+                        .then((bars) => {
+                            return this.processTradeBars(openStreams, bars, securityType, resolution, fileName, outputDirectory);
+                        }).then(() => {
+                            resolve();
+                        });
+                });
+            } catch (error) {
+                reject();
+            }
         });
     }
 
@@ -50,17 +61,28 @@ export class SecurityFileProcessor {
 
         let writePromises: Promise<{}>[] = [];
         tradeBars.forEach((value: types.TradeBar) => {
-
+            if (value === null) {
+                return;
+            }
             // add a new output stream if required
-            if (openStreams[value.symbol] !== undefined) {
+            if (openStreams[value.symbol] === undefined) {
                 let outputFilePath = this.generateOutputFileName(value.symbol, securityType, resolution, fileName, outputDirectory);
                 this.addOutputStream(openStreams, value.symbol, outputFilePath);
             }
 
             writePromises.push(new Promise<{}>((resolve, reject) => {
-                openStreams[value.symbol].outputStream.write(this.convertTradeBarToLine(value, securityType, resolution),
+                let line = this.convertTradeBarToLine(value, securityType, resolution);
+                if (!line.endsWith("\n")) {
+                    line += "\n";
+                }
+                openStreams[value.symbol].outputStream.write(line,
                     (err: any, fd: number) => {
                         // 
+                        if (err === undefined) {
+                            resolve();
+                        } else {
+                            reject();
+                        }
                     });
             }));
         });
@@ -74,11 +96,22 @@ export class SecurityFileProcessor {
 
     private generateOutputFileName(securitySymbol: string, securityType: types.SecurityType, resolution: types.Resolution,
         fileName: string, outputDirectory: string): string {
+        if (securityType === types.SecurityType.equity && resolution === types.Resolution.daily) {
+            return path.join(outputDirectory, securitySymbol.toLowerCase() + ".csv");
+        }
         return "";
     }
 
     private convertTradeBarToLine(tradeBar: types.TradeBar, securityType: types.SecurityType, resolution: types.Resolution): string {
-        return "";
+        let line = tradeBar.time.getFullYear().toString() + this.padZeros(tradeBar.time.getMonth() + 1)
+            + this.padZeros(tradeBar.time.getDate())
+            + " 00:00," + tradeBar.open * 10000 + "," + tradeBar.high * 10000 + "," + tradeBar.low * 10000 + "," + tradeBar.close * 10000
+            + "," + tradeBar.volume;
+        return line;
+    }
+
+    private padZeros(numberToPad: number): string {
+        return numberToPad < 10 ? ("00" + numberToPad).slice(-2) : numberToPad.toString();
     }
 }
 

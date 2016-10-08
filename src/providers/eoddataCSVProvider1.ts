@@ -8,7 +8,7 @@ class EODDataCSVProvider1 implements types.IProvider {
     public parseRecordFromLine(securityType: types.SecurityType, resolution: types.Resolution,
         fileName: string, line: string): Promise<types.TradeBar> {
 
-        if (securityType === types.SecurityType.Equity && resolution === types.Resolution.Daily) {
+        if (securityType === types.SecurityType.equity && resolution === types.Resolution.daily) {
             return this.parseEODEquityCSVFileLine(securityType, resolution, fileName, line);
         }
 

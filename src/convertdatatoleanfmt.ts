@@ -22,10 +22,12 @@ providerLoader.loadProviders(path.join(__dirname, "providers"))
 
         cli.convert(process.argv, providers)
             .then(() => {
-                console.log("All Done");
+                console.log("Conversion Done");
+                process.exit(0);
             })
             .catch((error) => {
-                console.log("FAILED...");
-                console.log(error);
+                console.log("Conversion Failed");
+                console.dir(error);
+                process.exit(1);
             });
     });
