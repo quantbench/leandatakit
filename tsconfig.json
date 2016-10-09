@@ -12,9 +12,9 @@
   },
   "files": [
     "src/commandlineparser.ts",
-    "src/convertdatatoleanfmt.ts",
     "src/convertor.ts",
     "src/equityInstrumentReader.ts",
+    "src/leandatakit.ts",
     "src/providerLoader.ts",
     "src/providers/eoddataCSVProvider.ts",
     "src/providers/eoddataCSVProvider1.ts",
