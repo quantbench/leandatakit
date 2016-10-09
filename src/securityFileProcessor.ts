@@ -45,7 +45,8 @@ export class SecurityFileProcessor {
                 lineReader.on("close", () => {
                     Promise.all(linePromises)
                         .then((bars) => {
-                            return this.processTradeBars(openStreams, bars, securityType, resolution, fileName, outputDirectory);
+                            return this.processTradeBars(openStreams, bars, securityType, resolution, fileName,
+                                securities, outputDirectory);
                         }).then(() => {
                             resolve();
                         });
@@ -57,11 +58,16 @@ export class SecurityFileProcessor {
     }
 
     private processTradeBars(openStreams: { [symbol: string]: OpenStreamData }, tradeBars: types.TradeBar[],
-        securityType: types.SecurityType, resolution: types.Resolution, fileName: string, outputDirectory: string): Promise<{}> {
+        securityType: types.SecurityType, resolution: types.Resolution, fileName: string, securities: string[],
+        outputDirectory: string): Promise<{}> {
 
         let writePromises: Promise<{}>[] = [];
         tradeBars.forEach((value: types.TradeBar) => {
             if (value === null) {
+                return;
+            }
+
+            if (!this.matcher.match(securities, value)) {
                 return;
             }
             // add a new output stream if required
