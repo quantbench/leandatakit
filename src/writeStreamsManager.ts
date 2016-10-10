@@ -34,22 +34,18 @@ export class WriteStreamsManager {
     public writeTradeBarToStream(tradeBar: types.TradeBar): Promise<{}> {
         let localthis = this;
         return new Promise((resolve, reject) => {
-            try {
-                let line = utils.LeanFileUtils.convertTradeBarToLine(tradeBar, this.securityType, this.resolution);
-                if (!line.endsWith("\n")) {
-                    line += "\n";
-                }
-                localthis.openStreams[tradeBar.symbol].outputStream.write(line,
-                    (err: any, fd: number) => {
-                        if (err === undefined) {
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-            } catch (error) {
-                reject(error);
+            let line = utils.LeanFileUtils.convertTradeBarToLine(tradeBar, this.securityType, this.resolution);
+            if (!line.endsWith("\n")) {
+                line += "\n";
             }
+            localthis.openStreams[tradeBar.symbol].outputStream.write(line,
+                (err: any, fd: number) => {
+                    if (err === undefined) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
         });
     }
 

@@ -26,6 +26,8 @@ export class ReadStreamManager {
                 Promise.all(linePromises)
                     .then((bars: types.TradeBar[]) => {
                         resolve(bars);
+                    }).catch((error) => {
+                        reject(error);
                     });
             });
         });

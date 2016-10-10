@@ -32,13 +32,12 @@ export class SecurityFileProcessor {
     }
 
     private processFile(fileName: string, securities: string[], outputDirectory: string): Promise<{}> {
-        return new Promise<{}>((resolve, reject) => {
-            this.readStreamManager.readBarsFromFile(fileName)
-                .then((bars) => {
-                    return this.processTradeBars(bars, fileName,
-                        securities, outputDirectory);
-                });
-        });
+        return this.readStreamManager.readBarsFromFile(fileName)
+            .then((bars) => {
+                return this.processTradeBars(bars, fileName,
+                    securities, outputDirectory);
+            });
+
     }
 
     private processTradeBars(tradeBars: types.TradeBar[], fileName: string, securities: string[], outputDirectory: string): Promise<{}> {
@@ -53,7 +52,6 @@ export class SecurityFileProcessor {
             }
             // add a new output stream if required
             this.writeStreamsManager.addOutputStreamForSecurity(value.symbol, fileName);
-
             writePromises.push(new Promise<{}>((resolve, reject) => {
                 this.writeStreamsManager.writeTradeBarToStream(value)
                     .then(() => {
