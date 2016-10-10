@@ -6,10 +6,10 @@ import * as Promise from "bluebird";
 export class Convertor {
     private discoverer: discovery.SecurityDiscoverer;
     private processor: processing.SecurityFileProcessor;
-    private conversionOptions: types.ConvertDataToLeanFmtOptions;
+    private conversionOptions: types.LeanDataKitConversionOptions;
 
     constructor(
-        conversionOptions: types.ConvertDataToLeanFmtOptions,
+        conversionOptions: types.LeanDataKitConversionOptions,
         discoverer: discovery.SecurityDiscoverer,
         processor: processing.SecurityFileProcessor) {
 

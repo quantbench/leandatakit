@@ -7,7 +7,7 @@ export class WriteStreamsManager {
     private securityType: types.SecurityType;
     private resolution: types.Resolution;
     private outputDirectory: string;
-    constructor(conversionOptions: types.ConvertDataToLeanFmtOptions) {
+    constructor(conversionOptions: types.LeanDataKitConversionOptions) {
         this.openStreams = {};
         this.securityType = conversionOptions.type;
         this.resolution = conversionOptions.resolution;

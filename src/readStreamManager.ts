@@ -8,7 +8,7 @@ export class ReadStreamManager {
     private resolution: types.Resolution;
     private provider: types.IProvider;
 
-    constructor(provider: types.IProvider, conversionOptions: types.ConvertDataToLeanFmtOptions) {
+    constructor(provider: types.IProvider, conversionOptions: types.LeanDataKitConversionOptions) {
         this.provider = provider;
         this.securityType = conversionOptions.type;
         this.resolution = conversionOptions.resolution;

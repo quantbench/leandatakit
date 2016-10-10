@@ -5,15 +5,15 @@ export const SECURITIES_DEFAULT = "*";
 export const SOURCE_EXTENSION_DEFAULT = "csv";
 
 export interface CommandLineParserResult {
-    options: types.ConvertDataToLeanFmtOptions;
+    options: types.LeanDataKitConversionOptions;
     error: string;
 }
 
 class CommandLineParserResultImpl implements CommandLineParserResult {
-    public options: types.ConvertDataToLeanFmtOptions;
+    public options: types.LeanDataKitConversionOptions;
     public error: string;
 
-    constructor(options: types.ConvertDataToLeanFmtOptions, error: string) {
+    constructor(options: types.LeanDataKitConversionOptions, error: string) {
         this.options = options;
         this.error = error;
     }

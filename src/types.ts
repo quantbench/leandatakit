@@ -1,7 +1,7 @@
 import * as Promise from "bluebird";
 import * as fs from "graceful-fs";
 
-export interface ConvertDataToLeanFmtOptions {
+export interface LeanDataKitConversionOptions {
     inputDirectory: string;
     outputDirectory: string;
     securities?: string[];
