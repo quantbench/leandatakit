@@ -1,4 +1,5 @@
 import * as Promise from "bluebird";
+import * as fs from "graceful-fs";
 
 export interface ConvertDataToLeanFmtOptions {
     inputDirectory: string;
@@ -50,6 +51,16 @@ export class QuoteBar implements IBar, IBaseBar {
     public high: number;
     public low: number;
     public close: number;
+}
+
+export class OpenStreamData {
+    public fileName: string;
+    public outputStream: fs.WriteStream;
+
+    constructor(fileName: string) {
+        this.fileName = fileName;
+        this.outputStream = fs.createWriteStream(this.fileName, { "flags": "w", "encoding": "utf8" });
+    }
 }
 
 export enum SecurityType {
