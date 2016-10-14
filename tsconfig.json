@@ -21,7 +21,6 @@
     "src/readStreamManager.ts",
     "src/securityDiscoverer.ts",
     "src/securityFileProcessor.ts",
-    "src/securityFileWriter.ts",
     "src/securityMatcher.ts",
     "src/types.ts",
     "src/writeStreamsManager.ts",

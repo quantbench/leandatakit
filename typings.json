@@ -1,7 +1,6 @@
 {
   "globalDependencies": {
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "jszip": "registry:dt/jszip#0.0.0+20160709055933",
     "node": "registry:env/node#6.0.0+20160918225031"
   },
   "dependencies": {

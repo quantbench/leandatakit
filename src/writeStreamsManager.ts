@@ -1,6 +1,9 @@
 import * as utils from "./leanFileUtils";
 import * as types from "./types";
 import * as Promise from "bluebird";
+import * as fs from "fs";
+let JSZip = require("jszip");
+import * as path from "path";
 
 export class WriteStreamsManager {
     public openStreams: { [symbol: string]: types.OpenStreamData };
@@ -14,10 +17,15 @@ export class WriteStreamsManager {
         this.outputDirectory = conversionOptions.outputDirectory;
     }
 
-    public closeOpenStreams() {
+    public closeOpenStreams(): Promise<{}> {
+        let promises: Promise<{}>[] = [];
         for (let symbol of Object.keys(this.openStreams)) {
             this.openStreams[symbol].outputStream.close();
+            promises.push(this.compressFile(this.openStreams[symbol].fileName));
+
         }
+
+        return Promise.all(promises);
     }
 
     public addOutputStreamForSecurity(symbol: string, fileName: string) {
@@ -51,5 +59,27 @@ export class WriteStreamsManager {
 
     private addOutputStream(openStreams: { [symbol: string]: types.OpenStreamData }, securitySymbol: string, outputFilePath: string) {
         this.openStreams[securitySymbol] = new types.OpenStreamData(outputFilePath);
+    }
+
+    private compressFile(fileName: string): Promise<{}> {
+        let baseFileName = path.basename(fileName);
+        let extName = "\\" + path.extname(fileName) + "$";
+        let regExp = new RegExp(extName);
+        let zipFileName = fileName.replace(regExp, ".zip");
+        return new Promise((resolve, reject) => {
+            let zip = new JSZip();
+            zip
+                .file(baseFileName, fs.createReadStream(fileName))
+                .generateNodeStream({ "streamFiles": true })
+                .pipe(fs.createWriteStream(zipFileName))
+                .on("finish", () => {
+                    fs.unlink(fileName, (err) => {
+                        if (err) {
+                            reject();
+                        }
+                        resolve();
+                    });
+                });
+        });
     }
 }

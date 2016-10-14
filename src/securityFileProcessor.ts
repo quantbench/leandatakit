@@ -22,12 +22,10 @@ export class SecurityFileProcessor {
             return this.processFile(file, securities, outputDirectory);
         }).then(() => {
             // close all the open streams
-            this.writeStreamsManager.closeOpenStreams();
-            return Promise.resolve("");
+            return this.writeStreamsManager.closeOpenStreams();
         }).catch((error) => {
             // close all the open streams
-            this.writeStreamsManager.closeOpenStreams();
-            return Promise.reject(error);
+            return this.writeStreamsManager.closeOpenStreams();
         });
     }
 
@@ -37,7 +35,6 @@ export class SecurityFileProcessor {
                 return this.processTradeBars(bars, fileName,
                     securities, outputDirectory);
             });
-
     }
 
     private processTradeBars(tradeBars: types.TradeBar[], fileName: string, securities: string[], outputDirectory: string): Promise<{}> {
