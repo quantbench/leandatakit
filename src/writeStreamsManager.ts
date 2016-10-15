@@ -1,7 +1,7 @@
 import * as utils from "./leanFileUtils";
 import * as types from "./types";
 import * as Promise from "bluebird";
-import * as fs from "fs";
+import * as fs from "graceful-fs";
 let JSZip = require("jszip");
 import * as path from "path";
 
@@ -70,7 +70,10 @@ export class WriteStreamsManager {
             let zip = new JSZip();
             zip
                 .file(baseFileName, fs.createReadStream(fileName))
-                .generateNodeStream({ "streamFiles": true })
+                .generateNodeStream({
+                    "compression": "DEFLATE", "compressionOptions": { "level": 6 }, "streamFiles": false,
+                    "type": "nodebuffer", "platform": process.platform,
+                })
                 .pipe(fs.createWriteStream(zipFileName))
                 .on("finish", () => {
                     fs.unlink(fileName, (err) => {

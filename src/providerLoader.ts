@@ -1,6 +1,6 @@
 import * as types from "./types";
 import * as Promise from "bluebird";
-import * as fs from "fs";
+import * as fs from "graceful-fs";
 import * as path from "path";
 let fsAsync: any = Promise.promisifyAll(fs);
 
